@@ -1,7 +1,7 @@
 params = {
-    'env_name': 'Riverraid-v0',
+    'env_name': 'LunarLander-v2',
     'evaluate': {
         'is_render': True,
-        'num_evaluate_episodes': 3,
+        'num_evaluate_episodes': 10,
     },
 }

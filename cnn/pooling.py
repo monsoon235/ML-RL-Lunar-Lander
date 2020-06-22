@@ -1,8 +1,6 @@
-import os
-
 import torch
 from cnn.config import config
-from cnn.relu import Relu
+from src.alg.PB17121687.lunar_lander.relu import Relu
 
 floatX = config['floatX']
 device = config['device']

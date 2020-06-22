@@ -2,7 +2,7 @@ import os
 
 import torch
 from cnn.config import config
-from cnn.relu import Relu
+from src.alg.PB17121687.lunar_lander.relu import Relu
 
 floatX = config['floatX']
 device = config['device']
@@ -39,7 +39,6 @@ class Convolution:
     stride_w: int
     in_channel: int
     out_channel: int
-    learning_rate: float
 
     with_pad: bool
 
@@ -48,9 +47,8 @@ class Convolution:
     bias: torch.Tensor
     grad_weight: torch.Tensor
 
-    def __init__(self, input_shape, out_channel, kernel_size, stride, learning_rate, activate_func: str = None):
+    def __init__(self, input_shape, out_channel, kernel_size, stride, activate_func: str = None):
         self.in_h, self.in_w, self.in_channel = input_shape
-        self.learning_rate = learning_rate
         self.out_channel = out_channel
         self.kernel_h, self.kernel_w = kernel_size
         self.stride_h, self.stride_w = stride
@@ -71,8 +69,8 @@ class Convolution:
 
         self.weight = torch.randn(
             (self.kernel_h, self.kernel_w, self.in_channel, out_channel),
-            dtype=floatX, device=device)
-        self.bias = torch.randn((self.out_channel,), dtype=floatX, device=device)
+            dtype=floatX, device=device) / 500
+        self.bias = torch.randn((self.out_channel,), dtype=floatX, device=device) / 500
         self.grad_weight = torch.empty(
             (self.kernel_h, self.kernel_w, self.in_channel, out_channel),
             dtype=floatX, device=device)
@@ -101,7 +99,7 @@ class Convolution:
         return out
 
     # 测试通过
-    def backward(self, eta: torch.Tensor) -> torch.Tensor:
+    def backward(self, eta: torch.Tensor,learning_rate:float) -> torch.Tensor:
         assert eta.shape == (self.batch, self.out_h, self.out_w, self.out_channel)
         if self.activation is not None:
             eta = self.activation.backward(eta)
@@ -131,8 +129,8 @@ class Convolution:
         next_eta = torch.tensordot(col_eta, filters_flip, dims=[(3, 4, 5), (0, 1, 3)])
         assert next_eta.shape == (self.batch, self.in_h, self.in_w, self.in_channel)
         # 更新
-        self.weight -= self.learning_rate * self.grad_weight / self.batch
-        self.bias -= self.learning_rate * grad_bias / self.batch
+        self.weight -= learning_rate / self.batch * self.grad_weight
+        self.bias -= learning_rate / self.batch * grad_bias
         # 去 padding
         if self.with_pad:
             next_eta = next_eta[:, :self.real_in_h, :self.real_in_w, :]

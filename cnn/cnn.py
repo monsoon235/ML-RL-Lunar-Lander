@@ -1,14 +1,9 @@
-from typing import List, Tuple
-
-from sklearn.metrics import f1_score
-
 import torch
-import time
 import os
 
 from cnn.config import config
 from cnn.convolution import Convolution
-from cnn.full_connection import FullConnection
+from src.alg.PB17121687.lunar_lander.full_connection import FullConnection
 
 floatX = config['floatX']
 device = config['device']

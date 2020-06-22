@@ -19,10 +19,10 @@ def init_env_policy(alg, env_name):
     print('Env:', env_name)
 
     policy = alg(env.observation_space, env.action_space)
-    print(env.action_space)  # 查看这个环境中可用的 action 有多少个
-    print(env.observation_space)  # 查看这个环境中可用的 state 的 observation 有多少个
-    print(env.observation_space.high)  # 查看 observation 最高取值
-    print(env.observation_space.low)  # 查看 observation 最低取值
+    # print(env.action_space)  # 查看这个环境中可用的 action 有多少个
+    # print(env.observation_space)  # 查看这个环境中可用的 state 的 observation 有多少个
+    # print(env.observation_space.high)  # 查看 observation 最高取值
+    # print(env.observation_space.low)  # 查看 observation 最低取值
     print('Load alg')
 
     return env, policy

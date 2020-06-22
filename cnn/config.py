@@ -10,7 +10,7 @@ config = {
             'out_channel': 32,
             'kernel_size': (8, 8),
             'stride': (4, 4),
-            'learning_rate': 0.0001,
+            'learning_rate': 0.00001,
             'activate_func': 'relu'
         },
         'conv2': {
@@ -18,7 +18,7 @@ config = {
             'out_channel': 64,
             'kernel_size': (4, 4),
             'stride': (2, 2),
-            'learning_rate': 0.0001,
+            'learning_rate': 0.00001,
             'activate_func': 'relu'
         },
         'conv3': {
@@ -26,13 +26,13 @@ config = {
             'out_channel': 64,
             'kernel_size': (3, 3),
             'stride': (1, 1),
-            'learning_rate': 0.0001,
+            'learning_rate': 0.00001,
             'activate_func': 'relu'
         },
         'fc_v1': {
             'dim_in': 22 * 16 * 64,
             'dim_out': 256,
-            'learning_rate': 0.0001,
+            'learning_rate': 0.00001,
             'activate_func': 'relu'
         },
         'fc_v2': {
@@ -44,13 +44,13 @@ config = {
         'fc_a1': {
             'dim_in': 22 * 16 * 64,
             'dim_out': 256,
-            'learning_rate': 0.0001,
+            'learning_rate': 0.00001,
             'activate_func': 'relu'
         },
         'fc_a2': {
             'dim_in': 256,
             'dim_out': 18,
-            'learning_rate': 0.0001,
+            'learning_rate': 0.00001,
             'activate_func': 'none'
         },
     }

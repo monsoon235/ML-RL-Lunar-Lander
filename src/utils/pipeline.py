@@ -14,11 +14,6 @@ def evaluate(env, policy, num_evaluate_episodes, is_render):
             # Take deterministic actions at test time 
             ac = policy.step(obs)
             obs, reward, done, ss = env.step(ac)
-            print(reward, done, ss)
-            ale = ss['ale.lives']
-            if ale != pre_ale:
-                pre_ale = ale
-                sleep(10)
             ep_ret += reward
             ep_len += 1
         policy.logkv_mean("TestEpRet", ep_ret)
