@@ -1,9 +1,8 @@
 import torch
 
 config = {
-    'device': 'cuda',
-    'floatX': torch.float32,
-    'thread_num': 8,
+    'device': 'cuda' if torch.cuda.is_available() else 'cpu',
+    'floatX': torch.float64,
     'params': {
         'fc1': {
             'dim_in': 8,

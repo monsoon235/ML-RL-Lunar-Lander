@@ -1,7 +1,7 @@
 import os
 
 import torch
-from cnn.config import config
+from src.alg.PB17121687.lunar_lander.config import config
 from src.alg.PB17121687.lunar_lander.relu import Relu
 
 floatX = config['floatX']
@@ -22,7 +22,6 @@ class FullConnection:
         self.dim_out = dim_out
         self.weight = torch.randn((dim_out, dim_in), dtype=floatX, device=device) / 500
         self.bias = torch.randn((dim_out,), dtype=floatX, device=device) / 500
-
         if activate_func == 'relu':
             self.activation = Relu()
         else:
@@ -68,9 +67,5 @@ class FullConnection:
         torch.save(self.bias, os.path.join(folder_path, 'bias.bin'))
 
     def load(self, folder_path: str):
-        self.weight = torch.load(os.path.join(folder_path, 'weight.bin'))
-        self.bias = torch.load(os.path.join(folder_path, 'bias.bin'))
-
-    def copy_from_other(self, other):
-        self.weight = other.weight.clone()
-        self.bias = other.bias.clone()
+        self.weight = torch.load(os.path.join(folder_path, 'weight.bin')).to(device)
+        self.bias = torch.load(os.path.join(folder_path, 'bias.bin')).to(device)

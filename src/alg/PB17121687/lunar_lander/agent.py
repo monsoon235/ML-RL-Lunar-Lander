@@ -81,7 +81,7 @@ class LunarLanderAgent:
         if random.random() <= epsilon:
             return self.env.action_space.sample()
         else:
-            in_date = state.reshape((1,) + state.shape).cuda(device=device)
+            in_date = state.reshape((1,) + state.shape).to(device)
             q_values = self.Q_local.forward(in_date)
             assert q_values.shape == (1, 4)
             return int(q_values.reshape((4,)).argmax())
@@ -108,11 +108,13 @@ class LunarLanderAgent:
             states_next[i] = batch[i]['state_next']
             dones[i] = batch[i]['done']
 
-        # q_arg_max = self.Q_local.forward(states_next).cpu()
-        # a_prime = q_arg_max.argmax(dim=1)
-        # q_target_next = self.Q_target.forward(states_next).cpu().gather(dim=1, index=a_prime.reshape((bs, 1))).flatten()
+        # Double DQN
+        q_arg_max = self.Q_local.forward(states_next).cpu()
+        a_prime = q_arg_max.argmax(dim=1)
+        q_target_next = self.Q_target.forward(states_next).cpu().gather(dim=1, index=a_prime.reshape((bs, 1))).flatten()
 
-        q_target_next = self.Q_target.forward(states_next).cpu().max(dim=1)
+        # DQN
+        # q_target_next = self.Q_target.forward(states_next).cpu().max(dim=1)
 
         ys = rewards + gamma * (1 - dones) * q_target_next
         qs = self.Q_local.forward(states).cpu().gather(dim=1, index=actions.reshape((bs, 1))).flatten()
@@ -175,7 +177,7 @@ class LunarLanderAgent:
               eps_decay: float,
               tau: float,
               gamma: float
-              ):
+              ) -> List[float]:
         # 初始化环境
         self.env = env
         self.memory = ReplyMemory(reply_memory_size)

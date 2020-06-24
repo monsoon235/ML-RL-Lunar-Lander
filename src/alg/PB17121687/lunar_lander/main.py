@@ -1,6 +1,7 @@
 from src.alg.PB17121687.lunar_lander.config import config
 from src.alg.PB17121687.lunar_lander.agent import LunarLanderAgent
 import gym
+import matplotlib.pyplot as plt
 
 floatX = config['floatX']
 device = config['device']
@@ -9,7 +10,7 @@ device = config['device']
 def train():
     env = gym.make('LunarLander-v2')
     agent = LunarLanderAgent()
-    agent.train(
+    score = agent.train(
         env=env,
         learning_rate=5e-4,
         max_episode=2000,
@@ -22,6 +23,11 @@ def train():
         tau=1e-3,
         gamma=0.99
     )
+    plt.plot(range(len(score)), score)
+    plt.ylabel('score')
+    plt.xlabel('episode')
+    plt.title('Train Process')
+    plt.savefig('score.png')
     agent.save('src/alg/PB17121687/lunar_lander/saved_model')
 
 

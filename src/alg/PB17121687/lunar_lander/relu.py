@@ -1,5 +1,5 @@
 import torch
-from cnn.config import config
+from src.alg.PB17121687.lunar_lander.config import config
 
 floatX = config['floatX']
 
