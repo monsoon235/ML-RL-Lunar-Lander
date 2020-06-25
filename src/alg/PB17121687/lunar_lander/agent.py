@@ -1,8 +1,6 @@
 from typing import Union, List, Tuple
-
-import torch
 from gym.spaces import Box
-
+import torch.tensor
 from src.alg.PB17121687.lunar_lander.config import config
 from src.alg.PB17121687.lunar_lander.model import DuelingDoubleDQN
 import math
@@ -92,7 +90,7 @@ class LunarLanderAgent:
               mini_batch_size: int,
               tau: float,
               gamma: float
-              ):
+              ) -> torch.Tensor:
 
         bs, batch = self.memory.sample(mini_batch_size)
         states = torch.empty(size=(bs,) + state.shape, dtype=floatX, device=device)

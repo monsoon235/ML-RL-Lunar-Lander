@@ -1,8 +1,9 @@
 import os
 
-import torch
+import torch.tensor
 from src.alg.PB17121687.lunar_lander.config import config
 from src.alg.PB17121687.lunar_lander.relu import Relu
+import numpy as np
 
 floatX = config['floatX']
 device = config['device']
@@ -27,7 +28,7 @@ class FullConnection:
         else:
             self.activation = None
 
-    def forward(self, in_data: torch.testing) -> torch.Tensor:
+    def forward(self, in_data: torch.Tensor) -> torch.Tensor:
         self.batch = in_data.shape[0]
         assert in_data.shape == (self.batch, self.dim_in)
         self.in_data = in_data
@@ -63,9 +64,9 @@ class FullConnection:
     def save(self, folder_path: str):
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
-        torch.save(self.weight, os.path.join(folder_path, 'weight.bin'))
-        torch.save(self.bias, os.path.join(folder_path, 'bias.bin'))
+        np.save(os.path.join(folder_path, 'weight.npy'), self.weight.cpu())
+        np.save(os.path.join(folder_path, 'bias.npy'), self.bias.cpu())
 
     def load(self, folder_path: str):
-        self.weight = torch.load(os.path.join(folder_path, 'weight.bin')).to(device)
-        self.bias = torch.load(os.path.join(folder_path, 'bias.bin')).to(device)
+        self.weight = torch.tensor(np.load(os.path.join(folder_path, 'weight.npy')), device=device)
+        self.bias = torch.tensor(np.load(os.path.join(folder_path, 'bias.npy')), device=device)

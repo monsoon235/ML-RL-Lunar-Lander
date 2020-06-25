@@ -1,4 +1,4 @@
-import torch
+import torch.tensor
 from src.alg.PB17121687.lunar_lander.config import config
 
 floatX = config['floatX']

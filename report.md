@@ -1,10 +1,10 @@
 # Machine Leaning Project: An Agent for LunarLander-v2 Using Dueling Deep Q Network
 
-<!-- **Notice: 代码中用到了 PyTorch, 但仅用到了其线性代数 API.** -->
-
 PB17121687 虞佳焕 100% 贡献
 
 **Notice:** 数学公式在 Typora 中正常显示，需开启 `Markdown 扩展语法` 中的 `内联公式` （重新启动 Typora 生效）。
+
+**Notice:** 导入约束中需要添加 `torch.empty`, `torch.tensor`
 
 ## 基本设计
 
