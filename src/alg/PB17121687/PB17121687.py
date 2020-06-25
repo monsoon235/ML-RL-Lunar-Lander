@@ -24,6 +24,8 @@ class PB17121687(RL_alg):
         self.agent.load('src/alg/PB17121687/lunar_lander/saved_model')
 
     def step(self, state):
+        if state[6] == 1 and state[7] == 1:
+            return 0
         return self.agent.act(state)
 
     def explore(self, obs):
